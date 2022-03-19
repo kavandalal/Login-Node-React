@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const route = require('./Routes/router');
 const cors = require('cors');
+const path = require('path');
 
 if (process.env.NODE_ENV != 'PRODUCTION') {
 	dotenv.config({ path: './.env' });
