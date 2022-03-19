@@ -19,7 +19,7 @@ router.post('/signup', async (req, res) => {
 			.save()
 			.then((data) => {
 				res.status(201);
-				res.json(data);
+				res.json({ status: 'success', msg: 'Successfully added user', data: data });
 			})
 			.catch((err) => res.json(err));
 	}
@@ -32,7 +32,7 @@ router.post('/signin', async (req, res) => {
 		res.json({ status: 'error', msg: 'Email does not exist' });
 	} else if (ans[0].email == email && (await comparePass(password, ans[0].password))) {
 		res.status(200);
-		res.json({ status: 'sucess', msg: 'Success' });
+		res.json({ status: 'success', msg: 'Success' });
 	} else {
 		// res.status(400);
 		res.json({ status: 'error', msg: 'Password Incorrect' });
