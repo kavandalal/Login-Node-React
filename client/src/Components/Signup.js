@@ -22,7 +22,7 @@ const Signup = () => {
 		e.preventDefault();
 		console.log(inputData);
 		axios
-			.post(`${API_URL}/signup`, inputData, { 'Content-Type': 'application/json' })
+			.post(`/signup`, inputData, { 'Content-Type': 'application/json' })
 			.then((res) => {
 				if (res.data.status == 'success') {
 					console.log(res);
@@ -31,6 +31,7 @@ const Signup = () => {
 					console.log(res);
 					alert.error(res.data.msg);
 				}
+				handleClear();
 			})
 			.catch((err) => {
 				console.log(err);

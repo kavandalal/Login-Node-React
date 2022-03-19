@@ -21,7 +21,7 @@ const Signin = () => {
 		e.preventDefault();
 		console.log(inputData);
 		axios
-			.post(`${API_URL}/signin`, inputData, { 'Content-Type': 'application/json' })
+			.post(`/signin`, inputData, { 'Content-Type': 'application/json' })
 			.then((res) => {
 				if (res.data.status == 'success') {
 					console.log(res);
@@ -30,6 +30,7 @@ const Signin = () => {
 					console.log(res);
 					alert.error(res.data.msg);
 				}
+				handleClear();
 			})
 			.catch((err) => {
 				console.log(err);
