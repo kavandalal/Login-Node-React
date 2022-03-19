@@ -13,4 +13,9 @@ app.use(express.json());
 app.use(cors());
 app.use('', route); // will append the routes in 'router' file with ''
 
+app.use(express.static(path.join(__dirname, './client/build')));
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, './client/build/index.html'));
+});
+
 app.listen(process.env.PORT || 4000, () => console.log('server is running', process.env.PORT));
