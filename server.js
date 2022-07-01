@@ -9,7 +9,7 @@ const path = require('path');
 if (process.env.NODE_ENV != 'PRODUCTION') {
 	dotenv.config({ path: './.env' });
 }
-mongoose.connect(process.env.DATABASE_ACCESS, () => console.log('Server Connected...'));
+mongoose.connect(process.env.DATABASE_ACCESS, () => console.log('DB Connected...'));
 app.use(express.json());
 app.use(cors());
 app.use('', route); // will append the routes in 'router' file with ''
@@ -19,7 +19,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, './client/build/index.html'));
 });
 
-app.listen(process.env.PORT || 4000, () => console.log('server is running', process.env.PORT));
+app.listen(process.env.PORT || 4000, () => console.log('Server is running on ', process.env.PORT));
 
 // after completing the project in local and now its time to deploy in heroku. Things to do :
 // 1 - add .gitignore file in the backend file (must include "/node_modules" , ".env")

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { API_URL } from '../Common/API_URL';
 import { useAlert } from 'react-alert';
+import { API_URL } from '../Common/API_URL';
 
 const Signup = () => {
 	const alert = useAlert();
@@ -22,7 +22,7 @@ const Signup = () => {
 		e.preventDefault();
 		console.log(inputData);
 		axios
-			.post(`/signup`, inputData, { 'Content-Type': 'application/json' })
+			.post(`${API_URL}/signup`, inputData, { 'Content-Type': 'application/json' })
 			.then((res) => {
 				if (res.data.status == 'success') {
 					console.log(res);

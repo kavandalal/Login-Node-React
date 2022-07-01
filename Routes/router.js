@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const signUpTemplate = require('../Models/signUpModel');
 const { hashPass, comparePass } = require('../Utils/passHash');
+// const jwt
 
 router.post('/signup', async (req, res) => {
 	const ans = await signUpTemplate.find({ email: req.body.email });
@@ -26,13 +27,12 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/signin', async (req, res) => {
-	const ans = await signUpTemplate.find({ email: req.body.email });
+	const ans = (await signUpTemplate.findOne({ email: req.body.email })) || [];
 	const { email, password } = req.body;
 	if (ans.length == 0) {
 		res.json({ status: 'error', msg: 'Email does not exist' });
-	} else if (ans[0].email == email && (await comparePass(password, ans[0].password))) {
-		res.status(200);
-		res.json({ status: 'success', msg: 'Success' });
+	} else if (ans.email == email && (await comparePass(password, ans.password))) {
+		res.status(200).json({ status: 'success', msg: 'Success' });
 	} else {
 		// res.status(400);
 		res.json({ status: 'error', msg: 'Password Incorrect' });
@@ -40,7 +40,30 @@ router.post('/signin', async (req, res) => {
 });
 
 router.get('/test', async (req, res) => {
+	const user = await signUpTemplate.findByName('xyz').where({ email: 'xyz@gmail.com' }).select('userName');
+	const user2 = await signUpTemplate.find().whereName('xyz').select('userName');
+	const user3 = await signUpTemplate.findOne();
+	user3.greetUser(); // custom function that will run for the instance
+	// console.log(user);
 	res.json({ msg: 'Working successfully' });
+});
+router.get('/allUser', async (req, res) => {
+	// const users = await signUpTemplate.aggregate([
+	// 	{
+	// 		$project: {
+	// 			email: 1,
+	// 			userName: 1,
+	// 			string1: 1,
+	// 			string2: 1,
+	// 			same: { $cmp: ['$string2', '$string1'] },
+	// 		},
+	// 	},
+	// ]);
+	const users = await signUpTemplate.find({ $string1: { $eq: '$string2' } });
+
+	res.json({ allLength: users?.length || 0, data: users });
 });
 
 module.exports = router;
+
+// xyz@gmail.com xyz

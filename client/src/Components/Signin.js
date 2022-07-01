@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { API_URL } from '../Common/API_URL';
 import { useAlert } from 'react-alert';
+import { API_URL } from '../Common/API_URL';
 
 const Signin = () => {
 	const alert = useAlert();
@@ -21,7 +21,7 @@ const Signin = () => {
 		e.preventDefault();
 		console.log(inputData);
 		axios
-			.post(`/signin`, inputData, { 'Content-Type': 'application/json' })
+			.post(`${API_URL}/signin`, inputData, { 'Content-Type': 'application/json' })
 			.then((res) => {
 				if (res.data.status == 'success') {
 					console.log(res);
@@ -30,7 +30,7 @@ const Signin = () => {
 					console.log(res);
 					alert.error(res.data.msg);
 				}
-				handleClear();
+				// handleClear();
 			})
 			.catch((err) => {
 				console.log(err);
